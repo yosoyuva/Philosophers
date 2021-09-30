@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:00:32 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/09/30 02:32:21 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/09/30 18:53:05 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ typedef struct s_philos
 {
 	int				pid;
 	pthread_t		ph;
-	int				l_f;
+	int				*l_f;
 	int				r_f;
+	pthread_mutex_t	mutex;
 	//int				r_f;///
 	//int				l_f;///
 }				t_philos;
