@@ -6,7 +6,7 @@
 #    By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/28 19:56:23 by ymehdi            #+#    #+#              #
-#    Updated: 2021/09/30 21:46:03 by ymehdi           ###   ########.fr        #
+#    Updated: 2021/10/02 13:15:36 by ymehdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME 	= philo
 
 SRCS 	=	srcs/philo.c \
 			srcs/utils1.c \
+			srcs/routine.c
 
 OBJS = $(SRCS:.c=.o)
 
