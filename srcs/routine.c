@@ -6,85 +6,90 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:25:43 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/02 17:15:02 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/07 15:40:23 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	p_status(t_philos *philo, int pid, char *str))
+int	routine_eat(t_ph *phil)
 {
-	pthread_mutex_lock(&philo->write);
-	printf("%lld %d %s", get_time_in_ms() - philo->starting_time, pid, str);
-	if (string[0] != 'd')
-		pthread_mutex_unlock(&philo->write);
-}
-
-int		routine_eat(t_philos *philo)
-{
-	pthread_mutex_lock(&philo->left_fork);
-	p_status(philo, philo->pid, "taken left fork\n");
-	pthread_mutex_lock(&philo->din_table->forks[philo->rf]);
-	p_status(philo, philo->pid, "taken right fork\n");
-	pthread_mutex_lock(&philo->eating);
-	p_status(philo, philo->pid, "is eating\n");
-	philo->start_eating = get_time_in_ms();
-	philo->is_eating = 1;
-	//usleep(philo->info.tte * 1000 - 16000);
-	while (ft_time_in_ms() - philo->start_eating < philo->info.tte)
+	pthread_mutex_lock(&phil->philo->forks[phil->r_f]);
+	p_status(phil, phil->pid, "Has taken a fork right\n");
+	pthread_mutex_lock(&phil->philo->forks[phil->l_f]);
+	p_status(phil, phil->pid, "Has taken a fork left\n");
+	pthread_mutex_lock(&phil->eating);
+	p_status(phil, phil->pid, "is eating\n");
+	phil->start_eating = get_time_in_ms();
+	phil->is_eating = 1;
+	usleep(phil->info.tte * 1000 - 16000);
+	while (get_time_in_ms() - phil->start_eating < phil->info.tte)
 		continue ;
-	philo->n_of_meal++;
-	philo->is_eating = 0;
-	pthread_mutex_unlock(&philo->eating);
-	pthread_mutex_unlock(&philo->left_fork);
-	pthread_mutex_unlock(&philo->right_fork);
-	return ;
+	phil->n_of_meal++;
+	phil->is_eating = 0;
+	pthread_mutex_unlock(&phil->eating);
+	pthread_mutex_unlock(&phil->philo->forks[phil->r_f]);
+	pthread_mutex_unlock(&phil->philo->forks[phil->l_f]);
+	return (0);
 }
 
-int		routine_sleep(t_philos *philo)
+int	routine_sleep(t_ph *philo)
 {
+	long long	time;
 
+	p_status(philo, philo->pid, "is sleeping\n");
+	time = get_time_in_ms();
+	usleep(philo->info.tts * 1000 - 16000);
+	while (get_time_in_ms() - time < philo->info.tts)
+		continue ;
+	return (0);
 }
 
-int		routine_think(t_philos *philo)
+int	routine_think(t_ph *philo)
 {
-
+	p_status(philo, philo->pid, "is thinking\n");
+	return (0);
 }
 
 void	*routine(void *philo)
 {
-	t_philos	r_philo;
+	t_ph	*r_philo;
 
-	r_philo = *(t_philos *)philo;
-	//pthread_mutex_lock(&(r_philo.mutex));
-	/*  CODE   */
-	while (r_philo.alive)
+	r_philo = (t_ph *)philo;
+	while (r_philo->philo->alive)
 	{
-		routine_eat(&r_philo);
-		routine_sleep(&r_philo);
-		routine_think(&r_philo);
-	//printf("\nInside routine philo number %d, righ fork = %d, and left = %d\n", r_philo.pid, r_philo.r_f, *(r_philo.l_f));
+		routine_eat(r_philo);
+		routine_sleep(r_philo);
+		routine_think(r_philo);
+		usleep(100);
 	}
-	/* END OF CODE */
-	//pthread_mutex_unlock(&(r_philo.mutex));
 	return (NULL);
 }
 
-void	*observer(void *philo)
+void	*observer(void *r_philo)
 {
-	t_philos	r_philo;
+	t_ph	*phil;
 
-	r_philo = *(t_philos *)philo;
-	//pthread_mutex_lock(&(r_philo.mutex));
-	/*  CODE   */
-	while (r_philo.alive)
+	phil = (t_ph *)r_philo;
+	while (phil->philo->alive)
 	{
-		if (1 == 2)
-			r_philo.alive = 0;
-		if (1 == 2)
-			r_philo.alive = 0;
+		if (!phil->is_eating
+			&& get_time_in_ms() - phil->start_eating >= phil->info.ttd)
+		{
+			pthread_mutex_lock(&phil->eating);
+			p_status(phil, phil->pid, "died\n");
+			phil->philo->alive = 0;
+			pthread_mutex_unlock(&phil->eating);
+		}
+		if ((phil->n_of_meal == phil->info.notepme) && (phil->cdt == 1))
+		{
+			phil->cdt = 0;
+			phil->philo->stop++;
+		}
+		if (phil->philo->stop == phil->info.nop)
+			phil->philo->alive = 0;
+		usleep(100);
 	}
-	/* END OF CODE */
-	//pthread_mutex_unlock(&(r_philo.mutex));
+	phil->end = 0;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:00:32 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/02 16:50:59 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/07 15:45:13 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,34 @@ typedef struct s_info
 	int	notepme;
 }				t_info;
 
-typedef struct s_status
+struct	s_philos;
+
+typedef struct s_ph
 {
-	int eating;
-}				t_status;
+	int				pid;
+	pthread_t		ph_thread;
+	int				l_f;
+	int				r_f;
+	int				is_eating;
+	int				n_of_meal;
+	long long		start_eating;
+	pthread_mutex_t	eating;
+	pthread_t		obsrvs;
+	t_info			info;
+	struct s_philos	*philo;
+	int				end;
+	int				cdt;
+}				t_ph;
 
 typedef struct s_philos
 {
-	int				pid;
-	pthread_t		ph;
-	pthread_t		obsrvs;
-	int				*l_f;
-	int				r_f;
-	int				alive;
+	t_ph			*ph;
 	pthread_mutex_t	write;
-	int				is_eating;
-	int				n_of_meal;
-	pthread_mutex_t	left_fork;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	eating;
+	pthread_mutex_t	*forks;
+	int				alive;
+	int				stop;
 	long long		starting_time;
-	long long		start_eating;
 	t_info			info;
-	//int				r_f;///
-	//int				l_f;///
 }				t_philos;
 
 int				ft_atoi(const char *str);
@@ -66,5 +70,9 @@ long long int	ft_atol(const char *str);
 void			*routine(void *philo);
 void			*observer(void *philo);
 long long		get_time_in_ms(void);
+void			p_status(t_ph *phil, int pid, char *str);
+int				check_if_num(char *str);
+int				check_if_arg_valid(char **argv, int argc);
+t_philos		ft_init(char **argv, int argc);
 
 #endif
