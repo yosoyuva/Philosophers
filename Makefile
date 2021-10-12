@@ -6,7 +6,7 @@
 #    By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/28 19:56:23 by ymehdi            #+#    #+#              #
-#    Updated: 2021/10/12 11:50:40 by ymehdi           ###   ########.fr        #
+#    Updated: 2021/10/12 13:44:37 by ymehdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ UNAME_S := $(shell uname -s)
         CC=clang
     endif
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 GFLAG = -g3 -fsanitize=address
 

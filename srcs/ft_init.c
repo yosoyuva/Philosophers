@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:23:36 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 11:48:54 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 14:27:00 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_philos	*ft_init_aux2(t_philos *philo, char **argv)
 	//	fprintf(stderr, "philo->ph[%d].pid = %d\n", i, philo->ph[i].pid);
 		philo->ph[i].end = 1;
 		philo->ph[i].cdt = 1;
-		pthread_mutex_init(&philo->forks[i], NULL);
-		pthread_mutex_init(&philo->ph[i].eating, NULL);
+		//pthread_mutex_init(&philo->forks[i], NULL);
+		//pthread_mutex_init(&philo->ph[i].eating, NULL);
 	//	fprintf(stderr, "philo->ph[%d].r_f = %d\n", i, philo->ph[i].r_f);
 	//	fprintf(stderr, "philo->ph[%d].l_f = %d\n", i, philo->ph[i].l_f);
 	//	fprintf(stderr, "philo->ph[%d].pid = %d\n", i, philo->ph[i].pid);
@@ -67,12 +67,14 @@ t_philos	*ft_init_aux2(t_philos *philo, char **argv)
 	//	}
 	}
 	i = 0;
-	//while (i < ft_atoi(argv[1]))
-	//{
-	//	fprintf(stderr, "test after init_aux_2, philo->ph[%d].end = %d, philo->ph[%d].pid = %d\n", i, philo->ph[i].end, i, philo->ph[i].pid);
-	//	fprintf(stderr, "test after init_aux_2, philo->ph[%d].r_f = %d, philo->ph[%d].l_f = %d\n", i, philo->ph[i].r_f, i, philo->ph[i].l_f);
-	//	i++;
-	//}
+	while (i < ft_atoi(argv[1]))
+	{
+		//fprintf(stderr, "test after init_aux_2, philo->ph[%d].end = %d, philo->ph[%d].pid = %d\n", i, philo->ph[i].end, i, philo->ph[i].pid);
+		//fprintf(stderr, "test after init_aux_2, philo->ph[%d].r_f = %d, philo->ph[%d].l_f = %d\n", i, philo->ph[i].r_f, i, philo->ph[i].l_f);
+		pthread_mutex_init(&philo->forks[i], NULL);
+		pthread_mutex_init(&philo->ph[i].eating, NULL);
+		i++;
+	}
 	return (philo);
 }
 
@@ -93,7 +95,7 @@ t_philos	*ft_init(char **argv, int argc, t_philos *philo)
 //	fprintf(stderr, "Inside init Before malloc forks\n");
 /*	philo->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * \
 					philo->info.nop);       */
-	philo->forks = ft_memalloc(sizeof(pthread_mutex_t) * philo->info.nop);
+	philo->forks = ft_memalloc(sizeof(pthread_mutex_t) * (ft_atoi(argv[1]) + 1));
 	if (philo->forks == NULL)
 	{
 		printf("Error while mallocing forks\n");

@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:04:57 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/11 23:43:00 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 14:45:43 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ long long	get_time_in_ms(void)
 void	p_status(t_ph *phil, int pid, char *str)
 {
 	pthread_mutex_lock(&phil->philo->write);
-	if (phil->end == 0)
+	if (phil->philo->alive == 0)
 	{
 		pthread_mutex_unlock(&phil->philo->write);
 		return ;
@@ -33,7 +33,14 @@ void	p_status(t_ph *phil, int pid, char *str)
 	printf("%lld %d %s", get_time_in_ms() - phil->philo->starting_time, \
 			pid, str);
 	if (str[0] != 'd')
+	{
 		pthread_mutex_unlock(&phil->philo->write);
+	}
+	else
+	{
+		phil->philo->alive = 0;
+		pthread_mutex_unlock(&phil->philo->write);	
+	}
 }
 
 int	check_if_arg_valid(char **argv, int argc)

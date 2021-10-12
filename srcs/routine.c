@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:25:43 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 00:13:00 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 14:38:20 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,16 @@ void	*routine(void *philo)
 	r_philo = (t_ph *)philo;
 	while (r_philo->philo->alive/* || r_philo->end != 0*/)
 	{
-		//fprintf(stderr, "start loop n%d in philo n%d\n", i, r_philo->pid);
+		fprintf(stderr, "start loop n%d in philo n%d\n", i, r_philo->pid);
 		if (r_philo->end == 0)
 			r_philo->philo->alive = 0;
 		routine_eat(r_philo);
+		fprintf(stderr, "eat routine for p%d done\n", r_philo->pid);
 		routine_sleep(r_philo);
+		fprintf(stderr, "sleep routine for p%d done\n", r_philo->pid);
 		routine_think(r_philo);
-		//fprintf(stderr, "end loop n%d\n", i);
+		fprintf(stderr, "think routine for p%d done\n", r_philo->pid);
+		fprintf(stderr, "end loop n%d\n", i);
 		i++;
 		usleep(100);
 		if (r_philo->end == 0)
