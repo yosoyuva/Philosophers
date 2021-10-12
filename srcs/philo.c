@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:00:46 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 16:36:06 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 17:07:37 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int	main(int argc, char **argv)
 //	fprintf(stderr, "Before creating threads\n");
 	create_threads(philo);
 	usleep(1000);
-	//free(philo->ph);
-	//free(philo->forks);
-	//free(philo);
+	free(philo->ph);
+	free(philo->forks);
+	free(philo);
 	return (0);
 }
