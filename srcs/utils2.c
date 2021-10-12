@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 16:04:57 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 14:45:43 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 16:20:26 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	p_status(t_ph *phil, int pid, char *str)
 	else
 	{
 		phil->philo->alive = 0;
-		pthread_mutex_unlock(&phil->philo->write);	
+		pthread_mutex_unlock(&phil->philo->write);
 	}
 }
 

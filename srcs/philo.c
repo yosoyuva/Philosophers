@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:00:46 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 14:33:27 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 16:36:06 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_philos	*create_threads_aux(t_philos *philo)
 //	fprintf(stderr, "Inside create_threads_aux Before any creation\n");
 	while (i < philo->info.nop)
 	{
-		fprintf(stderr, "Inside philo's creation loop p%d/%d\n", philo->ph[i].pid, philo->info.nop);
+	//	fprintf(stderr, "Inside philo's creation loop p%d/%d\n", philo->ph[i].pid, philo->info.nop);
 		philo->ph[i].start_eating = get_time_in_ms();
 		if (pthread_create(&philo->ph[i].ph_thread, NULL, \
 			&routine, (void *)&philo->ph[i]) != 0)
@@ -50,17 +50,17 @@ t_philos	*create_threads_aux(t_philos *philo)
 		usleep(100);
 		i++;
 	}
-	fprintf(stderr, "philos and observers launched\n");
+//	fprintf(stderr, "philos and observers launched\n");
 	i = 0;
 	while (i < philo->info.nop)
 	{
 		pthread_join(philo->ph[i].obsrvs, NULL);
-		fprintf(stderr, "observer n%d was joined\n", philo->ph[i].pid);
+	//	fprintf(stderr, "observer n%d was joined\n", philo->ph[i].pid);
 		pthread_join(philo->ph[i].ph_thread, NULL);
-		fprintf(stderr, "p%d was joined\n", philo->ph[i].pid);
+	//	fprintf(stderr, "p%d was joined\n", philo->ph[i].pid);
 		i++;
 	}
-	fprintf(stderr, "Philos and observers joined\n");
+//	fprintf(stderr, "Philos and observers joined\n");
 	return (philo);
 }
 
