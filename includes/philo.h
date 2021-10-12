@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 16:00:32 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/07 15:45:13 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 11:45:41 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ long long		get_time_in_ms(void);
 void			p_status(t_ph *phil, int pid, char *str);
 int				check_if_num(char *str);
 int				check_if_arg_valid(char **argv, int argc);
-t_philos		ft_init(char **argv, int argc);
+t_philos		*ft_init(char **argv, int argc, t_philos *philo);
+void			*ft_memalloc(size_t size);
 
 #endif

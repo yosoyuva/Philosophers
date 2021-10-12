@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:25:43 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/07 15:40:23 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 00:13:00 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,22 @@ int	routine_think(t_ph *philo)
 void	*routine(void *philo)
 {
 	t_ph	*r_philo;
+	int i= 0;
 
 	r_philo = (t_ph *)philo;
-	while (r_philo->philo->alive)
+	while (r_philo->philo->alive/* || r_philo->end != 0*/)
 	{
+		//fprintf(stderr, "start loop n%d in philo n%d\n", i, r_philo->pid);
+		if (r_philo->end == 0)
+			r_philo->philo->alive = 0;
 		routine_eat(r_philo);
 		routine_sleep(r_philo);
 		routine_think(r_philo);
+		//fprintf(stderr, "end loop n%d\n", i);
+		i++;
 		usleep(100);
+		if (r_philo->end == 0)
+			r_philo->philo->alive = 0;
 	}
 	return (NULL);
 }
@@ -77,6 +85,11 @@ void	*observer(void *r_philo)
 			&& get_time_in_ms() - phil->start_eating >= phil->info.ttd)
 		{
 			pthread_mutex_lock(&phil->eating);
+			if (phil->philo->alive == 0)
+			{
+				pthread_mutex_unlock(&phil->eating);
+				return (NULL);
+			}
 			p_status(phil, phil->pid, "died\n");
 			phil->philo->alive = 0;
 			pthread_mutex_unlock(&phil->eating);
@@ -91,5 +104,6 @@ void	*observer(void *r_philo)
 		usleep(100);
 	}
 	phil->end = 0;
+	pthread_mutex_unlock(&phil->philo->write);
 	return (NULL);
 }

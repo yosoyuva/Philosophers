@@ -6,7 +6,7 @@
 #    By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/28 19:56:23 by ymehdi            #+#    #+#              #
-#    Updated: 2021/10/07 15:25:04 by ymehdi           ###   ########.fr        #
+#    Updated: 2021/10/12 11:50:40 by ymehdi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS 	=	srcs/philo.c \
 			srcs/utils1.c \
 			srcs/routine.c \
 			srcs/utils2.c \
-			srcs/ft_init.c
+			srcs/ft_init.c \
+			srcs/utils3.c
 
 OBJS = $(SRCS:.c=.o)
 
