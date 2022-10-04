@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 11:44:52 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 11:45:22 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 18:04:06 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	*ft_memalloc(size_t size)
 {
 	void	*s;
 
-	if ((s = malloc(size)) == NULL)
+	s = malloc(size);
+	if (s == NULL)
 		return (NULL);
 	ft_memset(s, 0, size);
 	return (s);

@@ -6,7 +6,7 @@
 /*   By: ymehdi <ymehdi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 12:25:43 by ymehdi            #+#    #+#             */
-/*   Updated: 2021/10/12 16:35:20 by ymehdi           ###   ########.fr       */
+/*   Updated: 2021/10/12 18:10:15 by ymehdi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,15 @@ int	routine_think(t_ph *philo)
 void	*routine(void *philo)
 {
 	t_ph	*r_philo;
-	int i= 0;
 
 	r_philo = (t_ph *)philo;
-	while (r_philo->philo->alive/* || r_philo->end != 0*/)
+	while (r_philo->philo->alive)
 	{
-	//	fprintf(stderr, "start loop n%d in philo n%d, r_philo->philo->alive = %d\n", i, r_philo->pid, r_philo->philo->alive);
 		if (r_philo->end == 0)
 			r_philo->philo->alive = 0;
 		routine_eat(r_philo);
-		//fprintf(stderr, "eat routine for p%d done\n", r_philo->pid);
 		routine_sleep(r_philo);
-		//fprintf(stderr, "sleep routine for p%d done\n", r_philo->pid);
 		routine_think(r_philo);
-		//fprintf(stderr, "think routine for p%d done\n", r_philo->pid);
-	//	fprintf(stderr, "end loop n%d\n", i);
-		i++;
 		usleep(100);
 		if (r_philo->end == 0)
 			r_philo->philo->alive = 0;
@@ -94,11 +87,6 @@ void	*observer(void *r_philo)
 			&& get_time_in_ms() - phil->start_eating >= phil->info.ttd)
 		{
 			pthread_mutex_lock(&phil->eating);
-			if (phil->philo->alive == 0)
-			{
-				pthread_mutex_unlock(&phil->eating);
-				return (NULL);
-			}
 			p_status(phil, phil->pid, "died\n");
 			phil->philo->alive = 0;
 			pthread_mutex_unlock(&phil->eating);
